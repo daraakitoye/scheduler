@@ -50,15 +50,14 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview },
     };
+    console.log("***-", appointment);
 
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    // const changeState = setState({
-    //   ...state,
-    //   appointments,
-    // });
+
+    console.log("****", appointments);
 
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
@@ -68,10 +67,30 @@ export default function Application(props) {
           appointments,
         });
       });
+  }
 
-    //   return new Promise((resolve) => {
-    //     resolve();
-    //   });
+  function cancelInterview(id) {
+    const cancelled = {
+      ...state.appointments[id],
+      interview: { ...state.appointments[id].interview },
+    };
+
+    cancelled.interview.interviewer = null;
+    cancelled.interview.student = null;
+
+    const appointments = {
+      ...state.appointments,
+      [id]: cancelled,
+    };
+
+    return axios
+      .delete(`http://localhost:8001/api/appointments/${id}`)
+      .then((response) => {
+        setState({
+          ...state,
+          appointments,
+        });
+      });
   }
 
   return (
@@ -101,6 +120,7 @@ export default function Application(props) {
               interview={getInterview(state, appointment.interview)}
               interviewers={interviewers}
               bookInterview={bookInterview}
+              cancelInterview={cancelInterview}
             />
           );
         })}

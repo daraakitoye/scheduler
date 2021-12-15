@@ -4,7 +4,7 @@ import DayListItem from "./DayListItem";
 export default function DayList(props) {
   return (
     <>
-      <ul>
+      <ul data-testid="day">
         {props.days.map((day) => {
           return (
             <DayListItem

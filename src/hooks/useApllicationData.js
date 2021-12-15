@@ -3,14 +3,13 @@ import axios from "axios";
 
 export default function useAplicationData() {
   const [state, setState] = useState({
-    day: "Tuesday",
+    day: "Monday",
     days: [],
     appointments: {},
     interviewers: {},
   });
 
   const setDay = (day) => setState({ ...state, day });
-  // const setDays = (days) => setState((prev) => ({ ...prev, days }));
 
   useEffect(() => {
     axios.get(`http://localhost:8001/api/days`).then((response) => {
@@ -44,7 +43,7 @@ export default function useAplicationData() {
 
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
-      .then((response) => {
+      .then(() => {
         let days = state.days;
 
         if (!state.appointments[id].interview) {
@@ -82,7 +81,7 @@ export default function useAplicationData() {
 
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`)
-      .then((response) => {
+      .then(() => {
         let days = state.day;
         if (state.appointments[id].interview) {
           days = state.days.map((day) => {

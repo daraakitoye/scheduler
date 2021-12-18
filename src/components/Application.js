@@ -49,6 +49,7 @@ export default function Application(props) {
             />
           );
         })}
+        <Appointment key="end" time="5pm" />
       </section>
     </main>
   );

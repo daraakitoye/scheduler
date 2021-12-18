@@ -44,11 +44,8 @@ export default function useAplicationData() {
     return axios
       .put(`http://localhost:8001/api/appointments/${id}`, appointment)
       .then(() => {
-        let days = state.days;
-
         if (!state.appointments[id].interview) {
-          days = state.days.map((day) => {
-            console.log("..", day);
+          state.days.map((day) => {
             if (day.appointments.includes(id)) {
               day.spots--;
               return day;
@@ -82,10 +79,8 @@ export default function useAplicationData() {
     return axios
       .delete(`http://localhost:8001/api/appointments/${id}`)
       .then(() => {
-        let days = state.day;
         if (state.appointments[id].interview) {
-          days = state.days.map((day) => {
-            console.log("..", day);
+          state.days.map((day) => {
             if (day.appointments.includes(id)) {
               day.spots++;
               return day;
